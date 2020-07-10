@@ -103,8 +103,8 @@ def plot_with_errband(x,Y,col,effective_n=None):
     error = np.std(Y,axis=1)/np.sqrt(effective_n)
     y = np.mean(Y,axis = 1)
     
-    f=plt.plot(x, y, 'k')
-    plt.fill_between(x, y-error, y+error,facecolor=col, alpha=.5, edgecolor = None)
+    plt.plot(x, y, 'k')
+    f = plt.fill_between(x, y-error, y+error,facecolor=col, alpha=.5, edgecolor = None)
     plt.show()
     
     return f

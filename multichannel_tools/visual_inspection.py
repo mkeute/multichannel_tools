@@ -9,7 +9,7 @@ from matplotlib.widgets import RectangleSelector
 import matplotlib.collections as collections
 import numpy as np
 
-def visual_inspection(x):
+def visual_inspection(x, indexmode = 'exclude'):
     x = np.array(x)
     x = x.flatten()
     nanix = np.zeros(len(x))
@@ -74,5 +74,9 @@ def visual_inspection(x):
         else:
             plt.pause(.1)
             break
-   
-    return np.where(nanix == 0)[0]
+    if indexmode == 'exclude':
+    	return np.where(nanix == 1)[0]
+    elif indexmode == 'keep':
+    	return np.where(nanix == 0)[0]
+    else:
+    	raise ValueError
