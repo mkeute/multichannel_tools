@@ -25,6 +25,7 @@ def multichannel_plot(t, datarray):
 
     nchans = np.shape(datarray)[1]
 
+
     ht = .9/nchans
 
     ypos = [0.7, 0.5, 0.3, 0.1]
@@ -69,14 +70,14 @@ def get_channel_pos(channel_labels):
             :, 0:2
         ]
         - 0.5
-    ) * 2
+    ) / 5
 
 
 
 def my_topomap(dat,chans, mask=None):
 
     pos = get_channel_pos(chans)
-    im=plot_topomap(dat,pos, mask = mask)
+    im=plot_topomap(dat,pos, mask = mask, outlines = "head")
     plt.colorbar(im[0])
     
     
