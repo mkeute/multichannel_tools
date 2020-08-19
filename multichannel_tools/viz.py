@@ -55,7 +55,16 @@ def multichannel_plot(t, datarray):
     return fig, ax1
 
 
-
+def mne_plot(datarray,chanlabels = None,fs=1000):
+    import mne
+    from mne.viz import plot_raw
+    if chanlabels == None:
+        chanlabels = [f'chan{f}' for f in range(datarray.shape[1])]
+    info = mne.create_info(ch_names=chanlabels, sfreq=1000, ch_types='eeg')
+    raw = mne.io.RawArray(datarray.T, info)
+    raw.plot(scalings = 'auto')
+  
+    
 from mne.viz import plot_topomap
 import numpy as np
 import matplotlib.pyplot as plt
@@ -74,10 +83,14 @@ def get_channel_pos(channel_labels):
 
 
 
-def my_topomap(dat,chans, mask=None):
+def my_topomap(dat,chans, mask=None, clim = None):
 
     pos = get_channel_pos(chans)
-    im=plot_topomap(dat,pos, mask = mask, outlines = "head")
+    if clim == None:
+        im=plot_topomap(dat,pos, mask = mask, outlines = "head")
+    else:
+        im=plot_topomap(dat,pos, mask = mask, outlines = "head", vmin = clim[0], vmax = clim[1])
+
     plt.colorbar(im[0])
     
     
