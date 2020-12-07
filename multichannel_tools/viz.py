@@ -114,8 +114,8 @@ def plot_with_errband(x,Y,col,effective_n=None):
     import numpy as np
     if effective_n == None:
         np.shape(Y)[1] #effective_n can be used to account for repeatudes measures
-    error = np.std(Y,axis=1)/np.sqrt(effective_n)
-    y = np.mean(Y,axis = 1)
+    error = np.nanstd(Y,axis=1)/np.sqrt(effective_n)
+    y = np.nanmean(Y,axis = 1)
     
     plt.plot(x, y, 'k')
     f = plt.fill_between(x, y-error, y+error,facecolor=col, alpha=.5, edgecolor = None)

@@ -42,3 +42,12 @@ def common_avg_ref(dat):
     bl = np.tile(np.nanmean(dat,axis = 1,keepdims = True), (1,dat.shape[1]))
     dat -= bl    
     return dat
+
+
+def TKEO(x):
+    y = x[1:-1]**2 - x[:-2]*x[2:]
+    
+    y = np.array([y[0],y,y[-1]])
+    
+    return y
+        
