@@ -1,6 +1,7 @@
 README.md
 setup.py
 multichannel_tools/real_time_EEG_plot.py
+multichannel_tools/utils.py
 multichannel_tools/visual_inspection.py
 multichannel_tools/viz.py
 multichannel_tools.egg-info/PKG-INFO
