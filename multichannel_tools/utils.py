@@ -57,7 +57,39 @@ def TKEO(x):
 
 
 
+def get_channel_adjacency_1020(ch_names):
 
+    """
+    Parameters:
+        ch_names: list containing 10-20 channel labels as string
+    Returns:
+        ndict: dict with neighbours for each channel
+        nmat: scipy.sparse.csrmatrix. Adjacency matrix to be used, e.g., for cluster testing
+    """
+    
+    from scipy.sparse import csr_matrix
+    import mne
+    pos=mne.channels.read_layout("EEG1005.lay")
+    ch_pos = {ch:pos.pos[pos.names.index(ch),:2] for ch in ch_names}
+    pos_array = np.array(list(ch_pos.values()))
+    ndict = {}
+    nmat = np.zeros((len(ch_names),len(ch_names)))
+    for i,ch in enumerate(ch_names):
+        
+        xpos = pos_array[i,0]
+        ypos = pos_array[i,1]
+        
+        eucldist = np.sqrt((pos_array[:,0]-xpos)**2+(pos_array[:,1]-ypos)**2)
+        neighb_candi = np.argsort(eucldist)[:5]
+        neighb_idx = neighb_candi[eucldist[neighb_candi] < .15]
+        
+        neighbours = [ch_names[i] for i in neighb_idx]
+        ndict[ch] = neighbours
+        nmat[i,neighb_idx] = 1
+        nmat[neighb_idx,i] = 1
+        
+    return ndict, csr_matrix(nmat)
+   
 
 
 def regress_out_pupils(raw, ocular_channels = ['Fpz', 'Fp1', 'Fp2', 'AF7', 'AF8'], method = 'PCA'):
