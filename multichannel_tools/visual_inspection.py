@@ -10,6 +10,11 @@ import matplotlib.collections as collections
 import numpy as np
 
 def visual_inspection(x, indexmode = 'exclude'):
+    """
+    Allows you to visually inspect and exclude elements from an array.
+    The array x typically contains summary statistics, e.g., the signal
+    variance for each trial.
+    """
     x = np.array(x)
     x = x.flatten()
     nanix = np.zeros(len(x))
