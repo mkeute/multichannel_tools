@@ -118,3 +118,10 @@ def regress_out_pupils(raw, ocular_channels = ['Fpz', 'Fp1', 'Fp2', 'AF7', 'AF8'
         raw_data[ch,:] -= m.fit().predict()
     raw._data[:raw_data.shape[0],:] = raw_data
     return raw
+
+
+def cosine(x, a, phi, f, v):
+    return a * np.cos(f*x + phi) + v
+
+def do_one_perm(model,params, Y, X):
+    return model.fit(Y, params, x=X).best_values['a']
